@@ -1,33 +1,53 @@
-import { Header } from '@/components/Header'
-import { RestaurantInfo } from '@/components/RestaurantInfo'
-import { BusinessHours } from '@/components/BusinessHours'
-import { TimeAnalysis } from '@/components/TimeAnalysis'
-import { Demographics } from '@/components/Demographics'
-import { SecondVisit } from '@/components/SecondVisit'
-import { Recommendations } from '@/components/Recommendations'
-import { Statistics } from '@/components/Statistics'
-import { JsonLd } from '@/components/JsonLd'
-import { AeoSchema } from '@/components/AeoSchema'
+import Link from 'next/link';
+import { getAllRestaurants } from '@/lib/mockData';
 
-export default function RestaurantProfile() {
+export default function RestaurantList() {
+  const restaurants = getAllRestaurants();
+
   return (
     <div className="min-h-screen bg-gray-50">
-      <JsonLd />
-      <AeoSchema />
-      <Header />
-      <main className="max-w-4xl mx-auto px-4 py-6 space-y-6">
-        <RestaurantInfo />
-        <BusinessHours />
-        <TimeAnalysis />
-        <Demographics />
-        <SecondVisit />
-        <Recommendations />
-        <Statistics />
-        <footer className="text-sm text-gray-500 space-y-2 mt-8 p-4 bg-white rounded-lg">
-          <p>• 보다 자세한 매장 정보가 필요하거나 매장 정보 수정이 필요하다면 bcaimerchant@bccard.com 으로 문의해 주세요.</p>
-          <p>• 가맹점 홍보 및 마케팅을 위한 다양한 서비스를 준비하고 있습니다.</p>
-        </footer>
-      </main>
+      <div className="max-w-6xl mx-auto px-4 py-8">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold text-gray-900 mb-4">가맹점 목록</h1>
+          <p className="text-gray-600">다양한 가맹점들을 둘러보세요</p>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {restaurants.map((restaurant) => (
+            <Link
+              key={restaurant.id}
+              href={`/${restaurant.id}`}
+              className="block bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow p-6"
+            >
+              <div className="mb-4">
+                <span className="text-sm bg-blue-100 text-blue-800 px-3 py-1 rounded-full">
+                  {restaurant.category}
+                </span>
+              </div>
+              
+              <h2 className="text-xl font-bold text-gray-900 mb-2">{restaurant.name}</h2>
+              <p className="text-gray-600 mb-3">{restaurant.description}</p>
+              
+              <div className="space-y-2">
+                <div className="flex items-center space-x-2">
+                  <span className="text-gray-600">📍</span>
+                  <span className="text-sm text-gray-700 truncate">{restaurant.address}</span>
+                </div>
+                
+                <div className="flex items-center space-x-2">
+                  <span className="text-gray-600">📞</span>
+                  <span className="text-sm text-gray-700">{restaurant.phone}</span>
+                </div>
+
+                <div className="flex items-center space-x-2">
+                  <span className="text-gray-600">⭐</span>
+                  <span className="text-sm text-gray-700">{restaurant.rating}</span>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
     </div>
-  )
+  );
 }
