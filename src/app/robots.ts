@@ -1,44 +1,27 @@
 import { MetadataRoute } from 'next'
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = 'https://web.paybooc.ai'
-
   return {
     rules: [
       {
         userAgent: '*',
         allow: '/',
-        disallow: [
-          '/private/',
-          '/admin/',
-          '/api/',
-          '/_next/',
-          '/static/',
-          '*.json$',
+        disallow: '/api/',
+      },
+      // AI 크롤러들을 명시적으로 허용
+      {
+        userAgent: [
+          'GPTBot',
+          'ChatGPT-User',
+          'CCBot',
+          'anthropic-ai',
+          'Claude-Web'
         ],
-      },
-      {
-        userAgent: 'Googlebot',
         allow: '/',
-        disallow: ['/private/', '/admin/'],
-      },
-      {
-        userAgent: 'Bingbot',
-        allow: '/',
-        disallow: ['/private/', '/admin/'],
-      },
-      {
-        userAgent: 'NaverBot',
-        allow: '/',
-        disallow: ['/private/', '/admin/'],
-      },
-      {
-        userAgent: 'DaumBot',
-        allow: '/',
-        disallow: ['/private/', '/admin/'],
-      },
+        disallow: ['/api/', '/admin/']
+      }
     ],
-    sitemap: `${baseUrl}/sitemap.xml`,
-    host: baseUrl,
+    sitemap: 'https://localhost:3000/sitemap.xml',
+    host: 'https://localhost:3000'
   }
 } 

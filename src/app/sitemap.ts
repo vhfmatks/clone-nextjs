@@ -1,38 +1,27 @@
 import { MetadataRoute } from 'next'
+import { getAllRestaurants } from '@/lib/mockData'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://web.paybooc.ai'
-
-  return [
+  const baseUrl = 'https://localhost:3000'
+  const restaurants = getAllRestaurants()
+  
+  // 정적 페이지들
+  const staticPages = [
     {
       url: baseUrl,
       lastModified: new Date(),
-      changeFrequency: 'daily',
+      changeFrequency: 'weekly' as const,
       priority: 1,
     },
-    {
-      url: `${baseUrl}/mer/app/profile/726416316`,
-      lastModified: new Date(),
-      changeFrequency: 'hourly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/restaurants`,
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/category/dessert`,
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/about`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.5,
-    }
   ]
+  
+  // 동적 가맹점 페이지들
+  const restaurantPages = restaurants.map((restaurant) => ({
+    url: `${baseUrl}/${restaurant.id}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly' as const,
+    priority: 0.8,
+  }))
+  
+  return [...staticPages, ...restaurantPages]
 } 
