@@ -10,15 +10,9 @@ export default function robots(): MetadataRoute.Robots {
       },
       // AI 크롤러들을 명시적으로 허용
       {
-        userAgent: [
-          'GPTBot',
-          'ChatGPT-User',
-          'CCBot',
-          'anthropic-ai',
-          'Claude-Web'
-        ],
+        userAgent: '*',
         allow: '/',
-        disallow: ['/api/', '/admin/']
+        disallow: ['/api/']
       }
     ],
     sitemap: 'https://localhost:3000/sitemap.xml',
