@@ -15,7 +15,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/api/']
       }
     ],
-    sitemap: 'https://localhost:3000/sitemap.xml',
-    host: 'https://localhost:3000'
+    sitemap: 'https://eatpl.vercel.app/sitemap.xml',
+    host: 'https://eatpl.vercel.app'
   }
 } 
